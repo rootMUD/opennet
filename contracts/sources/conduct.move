@@ -1,0 +1,3 @@
+module opennet::conduct {
+
+}
