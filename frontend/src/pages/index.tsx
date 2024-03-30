@@ -1,3 +1,7 @@
+/* eslint-disable camelcase */
+/* eslint-disable prefer-const */
+/* eslint-disable spaced-comment */
+/* eslint-disable no-unused-vars */
 import {
 	DAPP_ADDRESS,
 	APTOS_FAUCET_URL,
@@ -7,8 +11,7 @@ import {
 import { NETWORK, PACKAGE_ID } from '../chain/config';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { MoveResource } from '@martiandao/aptos-web3-bip44.js/dist/generated';
-import { useState, useEffect } from 'react';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
 	AptosAccount,
 	WalletClient,
@@ -61,7 +64,7 @@ const [hasAddrAggregator, setHasAddrAggregator] =
 		const obelisk = new Obelisk({
 			networkType: NETWORK,
 			packageId: PACKAGE_ID,
-			metadata: metadata,
+			metadata,
 		});
 
 		const f_payload = (await obelisk.tx.aggr.bind_user(
@@ -95,7 +98,7 @@ const [hasAddrAggregator, setHasAddrAggregator] =
 	async function checkRepo() {
 		const response = await axios.get(`http://8.218.247.153:8000/github.com/${inputValue1}`);
 		console.log(response);
-		if(response.status== 200){
+		if(response.status=== 200){
 			const list=response.data.data.repos
 			console.log(list);
 			setcheck(list);
@@ -137,7 +140,7 @@ const [hasAddrAggregator, setHasAddrAggregator] =
             value={inputValue1} onChange={(ev)=>{change1(ev)}}
           />
           </div>
-          <br></br>
+          <br />
         
           <div>
           <button className="bg-blue hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
@@ -153,11 +156,12 @@ const [hasAddrAggregator, setHasAddrAggregator] =
           </div>
 
 		  <div style={{ display: check ? 'block' : 'none' }}>
-           <b >{check[0]}</b><br></br>
-		   <b >{check[1]}</b><br></br>
-		   <b >{check[2]}</b><br></br>
+           <b >{check[0]}</b>
+           <br />
+		   <b >{check[1]}</b><br />
+		   <b >{check[2]}</b><br />
 		  </div>
-          <br></br>
+      <br />
 		  
 		  
      </div>
