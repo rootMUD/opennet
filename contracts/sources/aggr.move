@@ -28,7 +28,7 @@ module opennet::aggr {
     }
 
      // Init.
-    entry fun init_module(sender: &signer) {
+    fun create(sender: &signer) {
         let addr_aggr = RepoAggr {
             key_addr: signer::address_of(sender),
             repos_map: table::new(),
@@ -42,8 +42,21 @@ module opennet::aggr {
 
     public entry fun bind_user(sender: &signer, github_user: String, addr: address) 
         acquires RepoAggr {
-   
+
         let sender_addr = signer::address_of(sender);
+
+        if (!exists<RepoAggr>(sender_addr)) {
+            let addr_aggr = RepoAggr {
+                key_addr: signer::address_of(sender),
+                repos_map: table::new(),
+                repos: vector::empty<String>(),
+                github_user_mapping : table::new(),
+                max_id: 0,
+            };
+
+            move_to<RepoAggr>(sender, addr_aggr);
+        };
+
         let repo_aggr = borrow_global_mut<RepoAggr>(sender_addr);
 
         let user_mapping = &mut repo_aggr.github_user_mapping;
@@ -52,10 +65,28 @@ module opennet::aggr {
         if (!user_exists) {
             table::add(user_mapping, github_user, addr);
         } 
+
+        
+        
     }
 
     public entry fun register_repo(sender: &signer, repo: String, rels: vector<String>)
         acquires RepoAggr {
+
+        let sender_addr = signer::address_of(sender);
+        
+        if (!exists<RepoAggr>(sender_addr)) {
+            let addr_aggr = RepoAggr {
+                key_addr: signer::address_of(sender),
+                repos_map: table::new(),
+                repos: vector::empty<String>(),
+                github_user_mapping : table::new(),
+                max_id: 0,
+            };
+
+            move_to<RepoAggr>(sender, addr_aggr);
+        };    
+
         let i = 0;
         while (i < vector::length(&rels)) {
             let rel = vector::borrow(&rels, i);
@@ -109,13 +140,13 @@ module opennet::aggr {
     use std::debug;
 
     #[test(acct = @0x123, bob = @0x456)]
-    public entry fun test_send_msg(acct: &signer, bob: &signer) acquires RepoAggr {
+    public entry fun test_bind_user(acct: &signer, bob: &signer) acquires RepoAggr {
         account::create_account_for_test(signer::address_of(acct));
 
         let alice_addr = signer::address_of(acct);
         let bob_addr = signer::address_of(bob);
 
-        init_module(acct); //init module
+        // init_module(acct); //init module
 
         bind_user(acct, string::utf8(b"harryli"), bob_addr);
 
@@ -130,9 +161,9 @@ module opennet::aggr {
         let alice_addr = signer::address_of(acct);
         let bob_addr = signer::address_of(bob);
 
-        init_module(acct); //init module
+        // init_module(acct); //init module
 
-        bind_user(acct, string::utf8(b"harryli"), bob_addr);
+        // bind_user(acct, string::utf8(b"harryli"), bob_addr);
 
         let depend_repos = vector::empty<String>();
         vector::push_back(&mut depend_repos, string::utf8(b"github.com/alice"));

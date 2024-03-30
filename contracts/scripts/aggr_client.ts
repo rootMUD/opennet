@@ -8,7 +8,8 @@ export const delay = (ms: number) =>
 async function init() {
   const network = 'devnet' as Network;
   const packageId =
-    '0x2a17af9e3bf74f3ddf9e5346fc2c4ba136af3d94e5c0476ebc678c0ae4bbd614';
+    '0x85a8c834987bd962d1ed7ccc92bc514ffc46425acc46ca022c0375551181e9d5';
+  // const packageId = process.env.PACKAGE_ID;
   const metadata = await loadMetadata(network, packageId);
   const privateKey = process.env.PRIVATE_KEY;
 
@@ -20,7 +21,7 @@ async function init() {
   });
   let faucetRes = await obelisk.requestFaucet(
     network,
-    '0x2a17af9e3bf74f3ddf9e5346fc2c4ba136af3d94e5c0476ebc678c0ae4bbd614'
+    packageId
   );
   console.log(faucetRes);
 
@@ -30,19 +31,14 @@ async function init() {
  
 
   const res =
-    (await obelisk.tx.conduct.send_msg([
+    (await obelisk.tx.aggr.bind_user([
+        "helloworld",
         '0xa671cca226518df2612bebefb73520d92de8d7dd58c5bedadad21af3df9bf59d',
-        "hello world",
-        234123412,
     ])) as Types.PendingTransaction;
   console.log(res.hash);
 
   console.log('=======================================\n');
   await delay(1000);
-
-  const msgs = await obelisk.query.conduct.get_messages(['0xa671cca226518df2612bebefb73520d92de8d7dd58c5bedadad21af3df9bf59d', 
-    '0x2a17af9e3bf74f3ddf9e5346fc2c4ba136af3d94e5c0476ebc678c0ae4bbd614']);
-  console.log(msgs);
 
 //   const balance = await obelisk.getBalance();
 //   console.log(balance);

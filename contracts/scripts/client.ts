@@ -8,7 +8,7 @@ export const delay = (ms: number) =>
 async function init() {
   const network = 'devnet' as Network;
   const packageId =
-    '0xc3a0b686e18cd2f49ee4a8ed721d11ff9483f00bf66258ff38355163df5844ee';
+    '582b55e01335c43b61907f06b65db1f6aac94d7369ad6f61cfbf2d41afdfd923';
   const metadata = await loadMetadata(network, packageId);
   const privateKey = process.env.PRIVATE_KEY;
 

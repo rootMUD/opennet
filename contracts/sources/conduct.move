@@ -6,6 +6,7 @@ module opennet::conduct {
     use std::table::{Self, Table};
     use aptos_framework::account::{Self, SignerCapability};
     use aptos_framework::resource_account::{Self};
+    use aptos_framework::timestamp;
 
     const EINBOX_NOT_EXIST : u64 = 1001;
 
@@ -27,7 +28,7 @@ module opennet::conduct {
         common_account: address,
     }
 
-    entry fun init_module(sender: &signer) {
+    fun init_module(sender: &signer) {
         let (resource_signer, signer_cap) = account::create_resource_account(sender, x"01");
         
         // let signer_cap = resource_account::retrieve_resource_account_cap(sender, @opennet);
@@ -43,7 +44,7 @@ module opennet::conduct {
         move_to(&resource_signer, MessageCap { signer_cap });
     }
 
-    public entry fun send_msg(sender: &signer, recipient_addr: address, content: String, timestamp: u64) 
+    public entry fun send_msg(sender: &signer, recipient_addr: address, content: String) 
         acquires MessageCap, Inbox {
         let sender_addr = signer::address_of(sender);
 
@@ -60,7 +61,7 @@ module opennet::conduct {
             vector::push_back(&mut msg_vector, Message {
                 content, 
                 sender : sender_addr,
-                timestamp : timestamp
+                timestamp : timestamp::now_seconds(),
             });
             table::add(&mut msg_table, sender_addr, msg_vector);
             table::add(messages, recipient_addr, msg_table);
@@ -70,7 +71,7 @@ module opennet::conduct {
             vector::push_back(msg_vector, Message {
                 content, 
                 sender : sender_addr,
-                timestamp : timestamp
+                timestamp : timestamp::now_seconds(),
             });
         }
     } 
@@ -125,7 +126,7 @@ module opennet::conduct {
 
         // let common_addr = account::create_resource_address(&alice_addr, x"01");
         
-        create(acct); //init module
+        init_module(acct); //init module
         // debug::print(&common_addr);
 
         // let resource = borrow_global<MessageCap>(common_addr);

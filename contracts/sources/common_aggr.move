@@ -52,33 +52,31 @@ module opennet::common_aggr {
         depend_repo : String
     }
 
-    
+    // // This is only callable during publishing.
+    // fun init_module(sender: &signer) {
+    //     // let (opennet_signer, opennet_cap) = account::create_resource_account(sender, );
 
-    // This is only callable during publishing.
-    fun init_module(sender: &signer) {
-        // let (opennet_signer, opennet_cap) = account::create_resource_account(sender, );
+    //     let (resource_signer, signer_cap) = account::create_resource_account(sender, x"01");
 
-        let (resource_signer, signer_cap) = account::create_resource_account(sender, x"01");
+    //     move_to(
+    //         &resource_signer,
+    //         Management {
+    //             admin: signer::address_of(sender),
+    //             unclaimed_capabilities: simple_map::create(),
+    //         },
+    //     );
 
-        move_to(
-            &resource_signer,
-            Management {
-                admin: signer::address_of(sender),
-                unclaimed_capabilities: simple_map::create(),
-            },
-        );
+    //     move_to(
+    //         &resource_signer,
+    //         GlobalRepo {
+    //             repo_depends: table::new(),
+    //             user_mapping: table::new(),
+    //             repo_count: 0,
+    //         }
+    //     );
 
-        move_to(
-            &resource_signer,
-            GlobalRepo {
-                repo_depends: table::new(),
-                user_mapping: table::new(),
-                repo_count: 0,
-            }
-        );
-
-        move_to(&resource_signer, CommonAccount { signer_cap });
-    }
+    //     move_to(&resource_signer, CommonAccount { signer_cap });
+    // }
 
     public entry fun bind_user(sender: &signer, github_user: String) 
         acquires CommonAccount, GlobalRepo {
@@ -141,8 +139,17 @@ module opennet::common_aggr {
     }
 
     fun get_opennet_signer_address() : address acquires CommonAccount {
-        let opennet_cap = &borrow_global<CommonAccount>(@opennet).signer_cap;
-        let opennet_signer = &account::create_signer_with_capability(opennet_cap);
+        // let opennet_cap = &borrow_global<CommonAccount>(@opennet).signer_cap;
+        // let opennet_signer = &account::create_signer_with_capability(opennet_cap);
+        // let opennet_signer_address = signer::address_of(opennet_signer);
+
+        // opennet_signer_address
+
+
+        let common_addr = account::create_resource_address(&@opennet, x"01");
+
+        let opennet = &borrow_global<CommonAccount>(common_addr).signer_cap;
+        let opennet_signer = &account::create_signer_with_capability(opennet);
         let opennet_signer_address = signer::address_of(opennet_signer);
 
         opennet_signer_address
