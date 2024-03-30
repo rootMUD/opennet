@@ -8,7 +8,7 @@ export const delay = (ms: number) =>
 async function init() {
   const network = 'devnet' as Network;
   const packageId =
-    '0x2a17af9e3bf74f3ddf9e5346fc2c4ba136af3d94e5c0476ebc678c0ae4bbd614';
+    '0xc3a0b686e18cd2f49ee4a8ed721d11ff9483f00bf66258ff38355163df5844ee';
   const metadata = await loadMetadata(network, packageId);
   const privateKey = process.env.PRIVATE_KEY;
 
@@ -20,7 +20,7 @@ async function init() {
   });
   let faucetRes = await obelisk.requestFaucet(
     network,
-    '0x2a17af9e3bf74f3ddf9e5346fc2c4ba136af3d94e5c0476ebc678c0ae4bbd614'
+    '0xc3a0b686e18cd2f49ee4a8ed721d11ff9483f00bf66258ff38355163df5844ee'
   );
   console.log(faucetRes);
 
@@ -30,10 +30,9 @@ async function init() {
  
 
   const res =
-    (await obelisk.tx.conduct.send_msg([
+    (await obelisk.tx.aggr.bind_user([
         '0xa671cca226518df2612bebefb73520d92de8d7dd58c5bedadad21af3df9bf59d',
-        "hello world",
-        234123412,
+        "tiankonglan"
     ])) as Types.PendingTransaction;
   console.log(res.hash);
 

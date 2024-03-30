@@ -87,9 +87,9 @@ module opennet::aggr {
 
             repo_aggr.max_id = repo_aggr.max_id + 1;
         } else {
-            let &mut repo_info = table::borrow_mut(repos_map, origin_repo);
+            let repo_info = table::borrow_mut(repos_map, origin_repo);
             
-            vector::push_back(repo_info.quote_repos, depend_repo);
+            vector::push_back(&mut repo_info.quote_repos, depend_repo);
         };
 
         event::emit(AddRepoEvent { origin_repo : origin_repo, depend_repo : depend_repo});
