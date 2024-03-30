@@ -27,7 +27,7 @@ module opennet::conduct {
         common_account: address,
     }
 
-    public entry fun create(sender: &signer) {
+    entry fun init_module(sender: &signer) {
         let (resource_signer, signer_cap) = account::create_resource_account(sender, x"01");
         
         // let signer_cap = resource_account::retrieve_resource_account_cap(sender, @opennet);
@@ -76,7 +76,7 @@ module opennet::conduct {
     } 
 
     fun get_inbox_signer_address() : address acquires MessageCap {
-        assert!(@opennet == from_bcs::to_address(x"2a17af9e3bf74f3ddf9e5346fc2c4ba136af3d94e5c0476ebc678c0ae4bbd614"), 2000);
+        // assert!(@opennet == from_bcs::to_address(x"2a17af9e3bf74f3ddf9e5346fc2c4ba136af3d94e5c0476ebc678c0ae4bbd614"), 2000);
         let common_addr = account::create_resource_address(&@opennet, x"01");
 
         let opennet = &borrow_global<MessageCap>(common_addr).signer_cap;
