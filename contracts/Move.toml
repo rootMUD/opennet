@@ -8,9 +8,15 @@ opennet = "_"
 
 [dev-addresses]
 
-[dependencies.AptosFramework]
-git = "https://github.com/aptos-labs/aptos-core.git"
-rev = "mainnet"
-subdir = "aptos-move/framework/aptos-framework"
+# [dependencies.AptosFramework]
+# git = "https://github.com/aptos-labs/aptos-core.git"
+# rev = "mainnet"
+# subdir = "aptos-move/framework/aptos-framework"
+
+[dependencies]
+AptosFramework = { local = "/Users/sky/workspace/block/aptos/aptos-core/aptos-move/framework/aptos-framework" }
+MoveStdlib = { local = "/Users/sky/workspace/block/aptos/aptos-core/aptos-move/framework/move-stdlib" }
+
+
 
 [dev-dependencies]
