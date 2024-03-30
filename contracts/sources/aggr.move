@@ -3,20 +3,14 @@ module opennet::aggr {
     use std::string::{String};
     use std::vector;
     use std::table::{Self, Table};
-    use aptos_framework::account;
-    use aptos_framework::account::SignerCapability;
-    use aptos_std::simple_map::{Self, SimpleMap};
+    use aptos_framework::account::{Self, SignerCapability};
     use aptos_framework::event;
 
-    struct OpenAggr has key {
-        repo: String,
-        relation_repos: vector<String>
-    }
-
+ 
     struct RepoInfo has key, store {
         repo : String,
         point : u64,
-        depend_repos : vector<String>,
+        quote_repos : vector<String>,
     }
 
     struct RepoAggr has key {
@@ -46,7 +40,7 @@ module opennet::aggr {
         move_to<RepoAggr>(sender, addr_aggr);
     }
 
-    public entry fun bind_user(sender: &signer, github_user: String) 
+    public entry fun bind_user(sender: &signer, github_user: String, addr: address) 
         acquires RepoAggr {
    
         let sender_addr = signer::address_of(sender);
@@ -56,7 +50,7 @@ module opennet::aggr {
 
         let user_exists = table::contains(user_mapping, github_user);
         if (!user_exists) {
-            table::add(user_mapping, github_user, sender_addr);
+            table::add(user_mapping, github_user, addr);
         } 
     }
 
@@ -66,10 +60,11 @@ module opennet::aggr {
         while (i < vector::length(&rels)) {
             let rel = vector::borrow(&rels, i);
             increase_point(sender, *rel, repo);
+            i = i + 1;
         };
     }
 
-    public fun increase_point (sender: &signer, origin_repo: String, depend_repo: String)
+    fun increase_point (sender: &signer, origin_repo: String, depend_repo: String)
         acquires RepoAggr{
    
         let send_addr = signer::address_of(sender);
@@ -82,25 +77,73 @@ module opennet::aggr {
             let repo_info = RepoInfo {
                 repo: origin_repo,
                 point: 0,
-                depend_repos : vector::empty<String>(),
+                quote_repos : vector::empty<String>(),
             };
 
-            let depend_repos = &mut repo_info.depend_repos;
-            vector::push_back(depend_repos, depend_repo);
+            let quote_repos = &mut repo_info.quote_repos;
+            vector::push_back(quote_repos, depend_repo);
 
             table::add(repos_map, origin_repo, repo_info);
-        } else {
-            // let depend_repos = table::borrow_mut(repos_map, origin_repo);
-            // vector::push_back(depend_repos, RepoInfo{
-            //     repo: depend_repo,
-            //     point: 0,
-            // });
-        };
 
-        repo_aggr.max_id = repo_aggr.max_id + 1;
+            repo_aggr.max_id = repo_aggr.max_id + 1;
+        } else {
+            let &mut repo_info = table::borrow_mut(repos_map, origin_repo);
+            
+            vector::push_back(repo_info.quote_repos, depend_repo);
+        };
 
         event::emit(AddRepoEvent { origin_repo : origin_repo, depend_repo : depend_repo});
     }
 
+    
 
+
+    // ----- test ------ 
+    #[test_only]
+    use std::string;
+    #[test_only]
+    use aptos_framework::timestamp;
+    #[test_only]
+    use aptos_framework::block;
+    #[test_only]
+    use std::debug;
+
+    #[test(acct = @0x123, bob = @0x456)]
+    public entry fun test_send_msg(acct: &signer, bob: &signer) acquires RepoAggr {
+        account::create_account_for_test(signer::address_of(acct));
+
+        let alice_addr = signer::address_of(acct);
+        let bob_addr = signer::address_of(bob);
+
+        init_module(acct); //init module
+
+        bind_user(acct, string::utf8(b"harryli"), bob_addr);
+
+        let repo_aggr = borrow_global_mut<RepoAggr>(alice_addr);
+        assert!(repo_aggr.max_id == 0, 1001);
+    }
+
+    #[test(acct = @0x123, bob = @0x456)]
+    public entry fun test_register_repo(acct: &signer, bob: &signer) acquires RepoAggr  {
+        account::create_account_for_test(signer::address_of(acct));
+
+        let alice_addr = signer::address_of(acct);
+        let bob_addr = signer::address_of(bob);
+
+        init_module(acct); //init module
+
+        bind_user(acct, string::utf8(b"harryli"), bob_addr);
+
+        let depend_repos = vector::empty<String>();
+        vector::push_back(&mut depend_repos, string::utf8(b"github.com/alice"));
+        vector::push_back(&mut depend_repos, string::utf8(b"github.com/bob"));
+        vector::push_back(&mut depend_repos, string::utf8(b"github.com/alex"));
+
+        register_repo(acct, string::utf8(b"github.com/tom"), depend_repos);
+
+
+        let repo_aggr = borrow_global_mut<RepoAggr>(alice_addr);
+        assert!(repo_aggr.max_id == 3, 1002);
+    }
 }
+
