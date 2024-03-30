@@ -13,7 +13,10 @@ export function NavBar() {
           <Image src="/logo2.png" width={150} height={150} alt="logo" />
         </a>
         <ul className="menu menu-horizontal p-0 ml-5">
+
+          <NavItem href="/user_bind" title="User" />
           <NavItem href="/" title="Repo" />
+          
           <NavItem href="/github_repo_binder" title="Donate" />
           <NavItem href="/service_manager" title="Consult" />
           <NavItem href="/service_events" title="Point" />

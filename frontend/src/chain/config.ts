@@ -3,6 +3,6 @@ import { Network } from '@0xobelisk/aptos-client';
 const NETWORK: Network = Network.DEVNET;
 
 const PACKAGE_ID =
-	'0xc3a0b686e18cd2f49ee4a8ed721d11ff9483f00bf66258ff38355163df5844ee';
+	'0x0e8ea7b9819268f600b0f89dea69c9ade8c271524ec361a545dfd4d659f5ed19';
 
 export { NETWORK, PACKAGE_ID };

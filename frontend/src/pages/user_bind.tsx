@@ -96,20 +96,7 @@ const [hasAddrAggregator, setHasAddrAggregator] =
 		const response = await axios.get(`http://8.218.247.153:8000/github.com/${inputValue1}`);
 		console.log(response);
 		if(response.status== 200){
-			const list=response.data.data.repos
-			console.log(list);
-			setcheck(list);
-
-			//const MyComponent: React.FC = (item,index) => {
-				//return (
-				  //<div>
-				//	{/* 使用.map 方法循环渲染列表项 */}
-				//	{item.map(item, index) => (
-				//	  <b key={index}>{check}</b>
-				//	))}
-				//  </div>
-				//);
-			 // }; 
+			setcheck(response.data);
 		}
 	}
 
@@ -140,6 +127,15 @@ const [hasAddrAggregator, setHasAddrAggregator] =
           <br></br>
         
           <div>
+          <b>input wallet address:</b>
+         <input
+            placeholder="input your wallet address"
+            className="mt-8 p-4 input input-bordered input-primary "
+            value={inputValue2} onChange={(ev)=>{change2(ev)}}
+          /> 
+          </div>
+          <br></br>
+          <div>
           <button className="bg-blue hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
           onClick={()=>checkRepo()} 
           style={{
@@ -153,13 +149,18 @@ const [hasAddrAggregator, setHasAddrAggregator] =
           </div>
 
 		  <div style={{ display: check ? 'block' : 'none' }}>
-           <b >{check[0]}</b><br></br>
-		   <b >{check[1]}</b><br></br>
-		   <b >{check[2]}</b><br></br>
+           <b style={{
+        color: 'green',
+      }}>地址校验成功</b>
 		  </div>
           <br></br>
-		  
-		  
+		  <div style={{ display: hash ? 'block' : 'none' }}>
+           <b>Transation Hash:{hash}</b>
+		  </div>
+		  <br></br>
+		  <div style={{ display: hash ? 'block' : 'none' }}>
+			<a href={`https://explorer.aptoslabs.com/txn/${hash}?network=devnet`}>在区块链浏览器查询</a>
+		  </div>
      </div>
     
       );
