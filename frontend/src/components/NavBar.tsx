@@ -17,7 +17,7 @@ export function NavBar() {
           <NavItem href="/user_bind" title="User" />
           <NavItem href="/" title="Repo" />
           
-          <NavItem href="/github_repo_binder" title="Donate" />
+          <NavItem href="/donate" title="Donate" />
           <NavItem href="/service_manager" title="Consult" />
           <NavItem href="/service_events" title="Point" />
           {/*<NavItem href="/lightweight_dao_manager" title="LightweightDAOManager" />
