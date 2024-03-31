@@ -19,7 +19,7 @@ def get_readme_content(repo = "movefuns/SuiStartrek"):
     }
     res = requests.get(url,headers=headers)
     tmp = res.json()
-    return decode_base64(tmp["content"]).replace("\n","")
+    return decode_base64(tmp["content"]).replace("\n"," ")
 
 
 def get_string_between(text, start_str, end_str):
@@ -49,9 +49,9 @@ def parse_move_did(text):
 
 def parse_donate(text):
     data = get_string_between(text, "# donate", "#")
-    pattern = r'\w+'
+    pattern = r'(0x[0-9a-fA-F]{64}) (\b\d+\.\d+?\b)'
     matches = re.findall(pattern, data)
-    return list(set(matches))
+    return [{x[0]:x[1]} for x in list(set(matches))]
 
 def parse_contributors(text):
     data = get_string_between(text, "# contributors", "#")
@@ -72,14 +72,11 @@ def github_readme_parse(name,repo):
             "msg":"参数错误"
         }
     content = get_readme_content(f"{name}/{repo}")
-    donates = [{
-        x.split(" ")[0]:float(x.split(" ")[1])
-    } for x in parse_donate(content)]
     return {
         "code":0,
         "data":{
             "aptos_addr":parse_move_did(content),
-            "donate":donates,
+            "donate":parse_donate(content),
             "contributors":parse_contributors(content),
             "repos":parse_github(content),
         },
