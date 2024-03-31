@@ -55,7 +55,7 @@ const [hasAddrAggregator, setHasAddrAggregator] =
     let [inputValue1, setInputValue1] = useState('');
 	let [inputValue2, setInputValue2] = useState('');
 	let [hash, sethash] = useState('');
-    let [check, setcheck] = useState('');
+    let [check, setcheck] = useState([]);
 
 
 	async function connect_contract() {
@@ -67,8 +67,8 @@ const [hasAddrAggregator, setHasAddrAggregator] =
 			metadata,
 		});
 
-		const f_payload = (await obelisk.tx.aggr.bind_user(
-			[inputValue1, inputValue2], // params
+		const f_payload = (await obelisk.tx.aggr.register_repo(
+			[inputValue1, check], // params
 			undefined, // typeArguments
 			true
 		)) as Types.EntryFunctionPayload;
@@ -87,12 +87,13 @@ const [hasAddrAggregator, setHasAddrAggregator] =
 	}
 	//点击按钮提交交易
 	async function submitTransation() {
-		console.log(inputValue1, inputValue2);
-		if (!inputValue1 || !inputValue2) {
-			alert('输入不能为空');
-		} else {
-			const respose = await connect_contract();
-		}
+		const respose = await connect_contract();
+		// console.log(inputValue1, inputValue2);
+		// if (!inputValue1 || !inputValue2) {
+		// 	alert('输入不能为空');
+		// } else {
+			
+		// }
 	}
 
 	async function checkRepo() {
@@ -101,7 +102,7 @@ const [hasAddrAggregator, setHasAddrAggregator] =
 		if(response.status=== 200){
 			const list=response.data.data.donate
 			console.log(list);
-			// setcheck(list);
+			setcheck(list);
 
 			//const MyComponent: React.FC = (item,index) => {
 				//return (
@@ -147,19 +148,18 @@ const [hasAddrAggregator, setHasAddrAggregator] =
           onClick={()=>checkRepo()} 
           style={{
             margin: '40px',
-          }}>load adress</button>
+          }}>Load relationship</button>
 
           <button className="bg-blue hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
           onClick={()=>submitTransation()} style={{
             margin: '40px',
-          }}> donate now!</button>
+          }}> Donate now</button>
           </div>
 
-		  <div style={{ display: check ? 'block' : 'none' }}>
-           <b >{check[0]}</b>
-           <br />
-		   <b >{check[1]}</b><br />
-		   <b >{check[2]}</b><br />
+		  <div style={{ display: check ? 'block' : 'none' }}> 
+		  {check.map((line, index) => (
+        <div key={index}>{line}</div>
+      ))}
 		  </div>
       <br />
 		  

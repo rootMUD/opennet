@@ -1,7 +1,3 @@
-/* eslint-disable camelcase */
-/* eslint-disable prefer-const */
-/* eslint-disable spaced-comment */
-/* eslint-disable no-unused-vars */
 import {
 	DAPP_ADDRESS,
 	APTOS_FAUCET_URL,
@@ -11,7 +7,8 @@ import {
 import { NETWORK, PACKAGE_ID } from '../chain/config';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { MoveResource } from '@martiandao/aptos-web3-bip44.js/dist/generated';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import React from 'react';
 import {
 	AptosAccount,
 	WalletClient,
@@ -55,7 +52,7 @@ const [hasAddrAggregator, setHasAddrAggregator] =
     let [inputValue1, setInputValue1] = useState('');
 	let [inputValue2, setInputValue2] = useState('');
 	let [hash, sethash] = useState('');
-    let [check, setcheck] = useState([]);
+    let [check, setcheck] = useState('');
 
 
 	async function connect_contract() {
@@ -64,11 +61,11 @@ const [hasAddrAggregator, setHasAddrAggregator] =
 		const obelisk = new Obelisk({
 			networkType: NETWORK,
 			packageId: PACKAGE_ID,
-			metadata,
+			metadata: metadata,
 		});
 
-		const f_payload = (await obelisk.tx.aggr.register_repo(
-			[inputValue1, check], // params
+		const f_payload = (await obelisk.tx.aggr.bind_user(
+			[inputValue1, inputValue2], // params
 			undefined, // typeArguments
 			true
 		)) as Types.EntryFunctionPayload;
@@ -87,8 +84,8 @@ const [hasAddrAggregator, setHasAddrAggregator] =
 	}
 	//点击按钮提交交易
 	async function submitTransation() {
-		console.log(inputValue1);
-		if (!inputValue1) {
+		console.log(inputValue1, inputValue2);
+		if (!inputValue1 || !inputValue2) {
 			alert('输入不能为空');
 		} else {
 			const respose = await connect_contract();
@@ -96,23 +93,10 @@ const [hasAddrAggregator, setHasAddrAggregator] =
 	}
 
 	async function checkRepo() {
-		const response = await axios.get(`http://8.218.247.153:8000/github.com/${inputValue1}`);
+		const response = await axios.get(`http://8.218.247.153:8000/github.com/${inputValue1}/opennet-verify`);
 		console.log(response);
 		if(response.status=== 200){
-			const list=response.data.data.repos
-			console.log(list);
-			setcheck(list);
-
-			//const MyComponent: React.FC = (item,index) => {
-				//return (
-				  //<div>
-				//	{/* 使用.map 方法循环渲染列表项 */}
-				//	{item.map(item, index) => (
-				//	  <b key={index}>{check}</b>
-				//	))}
-				//  </div>
-				//);
-			 // }; 
+			setcheck(response.data);
 		}
 	}
 
@@ -135,13 +119,24 @@ const [hasAddrAggregator, setHasAddrAggregator] =
         <div>
         <b>https://github.com/</b>
         <input
-            placeholder="input repo name"
+            placeholder="input user name"
             className="mt-8 p-4 input input-bordered input-primary "
             value={inputValue1} onChange={(ev)=>{change1(ev)}}
           />
+        <b>/opennet-verify</b>
+
           </div>
-          <br />
+          <br></br>
         
+          <div>
+          <b>input wallet address:</b>
+         <input
+            placeholder="input your wallet address"
+            className="mt-8 p-4 input input-bordered input-primary "
+            value={inputValue2} onChange={(ev)=>{change2(ev)}}
+          /> 
+          </div>
+          <br></br>
           <div>
           <button className="bg-blue hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
           onClick={()=>checkRepo()} 
@@ -152,18 +147,22 @@ const [hasAddrAggregator, setHasAddrAggregator] =
           <button className="bg-blue hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
           onClick={()=>submitTransation()} style={{
             margin: '40px',
-          }}> submit to chain</button>
+          }}> submit</button>
           </div>
-{/*TODO */}
-		  <div style={{ display: check ? 'block' : 'none' }}> 
-           <b >{check[0]}</b>
-           <br />
-		   <b >{check[1]}</b><br />
-		   <b >{check[2]}</b><br />
+
+		  <div style={{ display: check ? 'block' : 'none' }}>
+           <b style={{
+        color: 'green',
+      }}>地址校验成功</b>
 		  </div>
-      <br />
-		  
-		  
+          <br></br>
+		  <div style={{ display: hash ? 'block' : 'none' }}>
+           <b>Transation Hash:{hash}</b>
+		  </div>
+		  <br></br>
+		  <div style={{ display: hash ? 'block' : 'none' }}>
+			<a href={`https://explorer.aptoslabs.com/txn/${hash}?network=devnet`}>在区块链浏览器查询</a>
+		  </div>
      </div>
     
       );

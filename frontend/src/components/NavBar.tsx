@@ -14,10 +14,10 @@ export function NavBar() {
         </a>
         <ul className="menu menu-horizontal p-0 ml-5">
 
-          <NavItem href="/user_bind" title="User" />
-          <NavItem href="/" title="Repo" />
+          <NavItem href="/" title="User" />
+          <NavItem href="/repo" title="Repo" />
           
-          <NavItem href="/github_repo_binder" title="Donate" />
+          <NavItem href="/donate" title="Donate" />
           <NavItem href="/chat" title="Chat" />
           <NavItem href="/repo_point" title="Point" />
           <NavItem href="/airdrop" title="Airdrop" />
