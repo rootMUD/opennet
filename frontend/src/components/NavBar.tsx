@@ -13,12 +13,10 @@ export function NavBar() {
           <Image src="/logo2.png" width={150} height={150} alt="logo" />
         </a>
         <ul className="menu menu-horizontal p-0 ml-5">
-
-          <NavItem href="/" title="User" />
+        <NavItem href="/" title="User" />
           <NavItem href="/repo" title="Repo" />
-          
           <NavItem href="/donate" title="Donate" />
-          <NavItem href="/chat" title="Chat" />
+          <NavItem href="/chat_msg" title="Chat" />
           <NavItem href="/repo_point" title="Point" />
           <NavItem href="/airdrop" title="Airdrop" />
         </ul>
