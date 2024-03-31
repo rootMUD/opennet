@@ -150,6 +150,11 @@ const [hasAddrAggregator, setHasAddrAggregator] =
             margin: '40px',
           }}>Load relationship</button>
 
+		<input
+            placeholder="value for donate"
+            className="mt-8 p-4 input input-bordered input-primary "
+          /> APT
+
           <button className="bg-blue hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
           onClick={()=>submitTransation()} style={{
             margin: '40px',
