@@ -167,21 +167,9 @@ export default function Home() {
     }, [account]);
 
     return (
-
-
-        
         <div className=" p-4 w-[60%] m-auto flex flex-col shadow-2xl opacity-80 mb-10 justify-center ">
             { (account  && account.address) && (
                 <div className="overflow-x-auto mt-2">
-                <center>
-                    <h3><b>Events Owner:</b> 
-                        <a href={"https://explorer.aptoslabs.com/account/" + account.address + "?network=" + NETWORK} target="_blank" rel="noreferrer">
-                            <p className="underline">
-                                {account.address.toString()}
-                            </p>
-                        </a>
-                    </h3>
-                </center>
                 <br></br>
                 <br></br>
                 </div>
@@ -191,61 +179,33 @@ export default function Home() {
             {addServiceEvents && (
                 <div className="overflow-x-auto mt-2">
                     <h3 className="text-center font-bold">
-                        service_aggregator::ServiceAggregator.add_service_events
                     </h3>
                     <table className="table table-compact w-full my-2">
                     <thead>
                         <tr className="text-center">
                             <th>Name</th>
-                            <th>Description</th>
                             <th>URL</th>
-                            <th>Verification URL</th>
-                            <th>Expired at</th>
+                            <th>Point</th>
                         </tr>
                     </thead>
-                    <tbody>{render_add_service_envets()}</tbody>
+                    <tbody>
+                        <tr className="text-center">
+                            <th> opennet </th>
+                            <td><a className="underline" href="github.com/tiankonglan/opennet" target="_blank">github.com/tiankonglan/opennet</a></td>
+                            <td> 3 </td>
+                        </tr>
+                        <tr className="text-center">
+                            <th> opennet-core </th>
+                            <td><a className="underline" href="github.com/tiankonglan/opennet-core" target="_blank">github.com/tiankonglan/opennet-core</a></td>
+                            <td> 2 </td>
+                        </tr>
+                        <tr className="text-center">
+                            <th> opennet-toolkit </th>
+                            <td><a className="underline" href="github.com/tiankonglan/opennet" target="_blank">github.com/tiankonglan/opennet-toolkit</a></td>
+                            <td> 1 </td>
+                        </tr></tbody>
                     </table>
                     <br></br>
-                </div>
-            )}
-
-            {/* TODO: Auto Generate by Code Generator */}
-            {/* update_service_events */}
-            {updateServiceEvents && (
-                <div className="overflow-x-auto mt-2">
-                    <h3 className="text-center font-bold">
-                        service_aggregator::ServiceAggregator.update_service_events
-                    </h3>
-                    <table className="table table-compact w-full my-2">
-                    <thead>
-                        <tr className="text-center">
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>URL</th>
-                            <th>Verification URL</th>
-                            <th>Expired at</th>
-                        </tr>
-                    </thead>
-                    <tbody>{render_update_service_envets()}</tbody>
-                    </table>
-                    <br></br>
-                </div>
-            )}
-
-            {/* delete_service_events */}
-            {deleteServiceEvents && (
-                <div className="overflow-x-auto mt-2">
-                    <h3 className="text-center font-bold">
-                        service_aggregator::ServiceAggregator.delete_service_events
-                    </h3>
-                    <table className="table table-compact w-full my-2">
-                    <thead>
-                        <tr className="text-center">
-                            <th>Name</th>
-                        </tr>
-                    </thead>
-                    <tbody>{render_delete_service_events()}</tbody>
-                    </table>
                 </div>
             )}
         </div>

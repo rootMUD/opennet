@@ -145,7 +145,7 @@ const [hasAddrAggregator, setHasAddrAggregator] =
           <button className="bg-blue hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
           onClick={()=>submitTransation()} style={{
             margin: '40px',
-          }}> submit</button>
+          }}> submit to chain</button>
           </div>
 
 		  <div style={{ display: check ? 'block' : 'none' }}>

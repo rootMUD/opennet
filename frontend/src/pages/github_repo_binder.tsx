@@ -151,13 +151,13 @@ export default function Home() {
     console.log(services);
   }, [services]);
 
-  async function init_did() {
-    await signAndSubmitTransaction(do_init_did(), { gas_unit_price: 100 }).then(() => {
+  async function init_Repo() {
+    await signAndSubmitTransaction(do_init_Repo(), { gas_unit_price: 100 }).then(() => {
       setTimeout(get_services, 3000);
     });
   }
 
-  function do_init_did() {
+  function do_init_Repo() {
     const { description, resource_path, addr_type, addr, pubkey, addr_description, chains } = addAddrInput;
     return {
       type: 'entry_function_payload',
@@ -168,7 +168,7 @@ export default function Home() {
   }
 
   const [addAddrInput, setAddAddrInput] = useState<{
-    did_type: number;
+    Repo_type: number;
     description: string;
     resource_path: string;
     addr_type: number;
@@ -178,7 +178,7 @@ export default function Home() {
     chains: Array<string>;
     expired_at: number;
   }>({
-    did_type: 0,
+    Repo_type: 0,
     description: '',
     resource_path: '',
     addr_type: 0,
@@ -252,17 +252,17 @@ export default function Home() {
       {!hasAddrAggregator && (
         <>
           <input
-            placeholder="Description for your DID"
+            placeholder="Description for your Repo"
             className="mt-8 p-4 input input-bordered input-primary w-1/2"
             onChange={(e) => setAddAddrInput({ ...addAddrInput, description: e.target.value })}
           />
           <br></br>
           <br></br>
-          The type of DID Owner: &nbsp; &nbsp; &nbsp; &nbsp;
+          The type of Repo Owner: &nbsp; &nbsp; &nbsp; &nbsp;
           <select
-            value={addAddrInput.did_type}
+            value={addAddrInput.Repo_type}
             onChange={(e) => {
-              setAddAddrInput({ ...addAddrInput, did_type: parseInt(e.target.value) });
+              setAddAddrInput({ ...addAddrInput, Repo_type: parseInt(e.target.value) });
             }}>
             <option value="0">Individual</option>
             <option value="1">DAO</option>
@@ -270,10 +270,10 @@ export default function Home() {
             <option value="3">Repo</option>
           </select>
           <br></br>
-          <button onClick={init_did} className={'btn btn-primary font-bold mt-4  text-white rounded p-4 shadow-lg'}>
-            Init Your DID
+          <button onClick={init_Repo} className={'btn btn-primary font-bold mt-4  text-white rounded p-4 shadow-lg'}>
+            Init Your Repo
           </button>{' '}
-          &nbsp; &nbsp; &nbsp; &nbsp; 💡 INIT Your DID on Aptos before the other Operations!
+          &nbsp; &nbsp; &nbsp; &nbsp; 💡 INIT Your Repo on Aptos before the other Operations!
           <br></br>
           <button
             onClick={get_services}
@@ -326,7 +326,7 @@ export default function Home() {
         <div className="inline-flex relative mr-3 formkit-field">
           <p>GitHub Repo path ( Begin with https:// ) :</p>
           <input
-            placeholder="https://github.com/NonceGeek/MoveDID"
+            placeholder="https://github.com/NonceGeek/MoveRepo"
             className="p-4 input input-bordered input-primary ml-2"
             onChange={(e) => updateFormInput({ ...formInput, github_path: e.target.value })}
             value={formInput.github_path}

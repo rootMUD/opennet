@@ -18,17 +18,9 @@ export function NavBar() {
           <NavItem href="/" title="Repo" />
           
           <NavItem href="/github_repo_binder" title="Donate" />
-          <NavItem href="/service_manager" title="Consult" />
-          <NavItem href="/service_events" title="Point" />
-          {/*<NavItem href="/lightweight_dao_manager" title="LightweightDAOManager" />
-          <NavItem href="/addr" title="AddrManager" />
-          <NavItem href="/addr_events" title="AddrEvents" />
-          <NavItem href="/create_did_events" title="CreateDIDEvents" /> */}
-          {/* <NavItem href="/did_querier" title="DIDQuerier" /> 
-          <li className="font-sans font-semibold text-lg">
-            <a href="https://github.com/NonceGeek/MoveDID/tree/main/did-aptos" target="_blank">Source Code</a>
-            <a href={MODULE_URL} target="_blank">Contract on Explorer</a>
-          </li>*/}
+          <NavItem href="/chat" title="Chat" />
+          <NavItem href="/repo_point" title="Point" />
+          <NavItem href="/airdrop" title="Airdrop" />
         </ul>
       </div>
       <AptosConnect />
