@@ -27,8 +27,6 @@ async function init() {
 
   console.log('\n======= send inc transaction ========');
 
- 
- 
 
   const res =
     (await obelisk.tx.aggr.bind_user([

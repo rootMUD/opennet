@@ -13,6 +13,11 @@ module opennet::aggr {
         quote_repos : vector<String>,
     }
 
+    struct RepoResult has key, store {
+        repo : String,
+        point : u64,
+    }
+
     struct RepoAggr has key {
         key_addr: address,
         repos_map: Table<String, RepoInfo>,
@@ -74,7 +79,7 @@ module opennet::aggr {
         acquires RepoAggr {
 
         let sender_addr = signer::address_of(sender);
-        
+
         if (!exists<RepoAggr>(sender_addr)) {
             let addr_aggr = RepoAggr {
                 key_addr: signer::address_of(sender),
@@ -126,7 +131,13 @@ module opennet::aggr {
         event::emit(AddRepoEvent { origin_repo : origin_repo, depend_repo : depend_repo});
     }
 
-    
+    #[view]
+    public entry fun get_top_repos(num : u64) : vector<> {
+
+    }
+
+ 
+
 
 
     // ----- test ------ 
