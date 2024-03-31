@@ -129,7 +129,7 @@ const [hasAddrAggregator, setHasAddrAggregator] =
           <br></br>
         
           <div>
-          <b>input wallet address:</b>
+          <b>Input wallet address:</b>
          <input
             placeholder="input your wallet address"
             className="mt-8 p-4 input input-bordered input-primary "
@@ -153,7 +153,7 @@ const [hasAddrAggregator, setHasAddrAggregator] =
 		  <div style={{ display: check ? 'block' : 'none' }}>
            <b style={{
         color: 'green',
-      }}>地址校验成功</b>
+      }}>Address check success</b>
 		  </div>
           <br></br>
 		  <div style={{ display: hash ? 'block' : 'none' }}>
@@ -161,7 +161,7 @@ const [hasAddrAggregator, setHasAddrAggregator] =
 		  </div>
 		  <br></br>
 		  <div style={{ display: hash ? 'block' : 'none' }}>
-			<a href={`https://explorer.aptoslabs.com/txn/${hash}?network=devnet`} target="_blank">交易成功,在区块链浏览器查询</a>
+			<a href={`https://explorer.aptoslabs.com/txn/${hash}?network=devnet`} target="_blank">Tx success, view on block chain</a>
 		  </div>
      </div>
     

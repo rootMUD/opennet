@@ -1,13 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 .btn {
     @apply font-bold py-2 px-4 rounded;
-  }
-  .btn-blue {
+}
+
+.btn-blue {
     @apply bg-blue-500 text-white;
-  }
-  .btn-blue:hover {
+}
+
+.btn-blue:hover {
     @apply bg-blue-700;
-  }
+}
+
+a {
+    color: blue;
+    /* 设置链接文本颜色为蓝色 */
+    text-decoration: underline;
+    /* 添加下划线 */
+}
