@@ -131,12 +131,7 @@ module opennet::aggr {
         event::emit(AddRepoEvent { origin_repo : origin_repo, depend_repo : depend_repo});
     }
 
-    #[view]
-    public entry fun get_top_repos(num : u64) : vector<> {
 
-    }
-
- 
 
 
 
