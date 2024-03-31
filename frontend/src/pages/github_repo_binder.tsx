@@ -1,15 +1,24 @@
+/* eslint-disable prefer-template */
+/* eslint-disable prefer-const */
+/* eslint-disable react/jsx-no-target-blank */
+/* eslint-disable react/self-closing-comp */
+/* eslint-disable camelcase */
+/* eslint-disable react/jsx-curly-brace-presence */
+/* eslint-disable no-unused-vars */
 import { DAPP_ADDRESS, APTOS_FAUCET_URL, APTOS_NODE_URL, MODULE_URL } from '../config/constants';
 import { useWallet } from '@manahippo/aptos-wallet-adapter';
 import { MoveResource } from '@martiandao/aptos-web3-bip44.js/dist/generated';
-import { useState, useEffect } from 'react';
-import React from 'react';
+import React,{ useState, useEffect } from 'react';
 import { AptosAccount, WalletClient, HexString } from '@martiandao/aptos-web3-bip44.js';
-
+// import SDK from "@moveflow/sdk.js";
+import { Network } from '@0xobelisk/aptos-client';
+import axios from 'axios';
 // import { CodeBlock } from "../components/CodeBlock";
 
 // import { TypeTagVector } from "@martiandao/aptos-web3-bip44.js/dist/aptos_types";
 // import {TypeTagParser} from "@martiandao/aptos-web3-bip44.js/dist/transaction_builder/builder_utils";
 export default function Home() {
+  // const sdk = new SDK(Network.TESTNET)
   const [hasAddrAggregator, setHasAddrAggregator] = React.useState<boolean>(false);
   const [services, setServices] = React.useState<Array<any>>([]);
   const { account, signAndSubmitTransaction } = useWallet();
@@ -30,6 +39,28 @@ export default function Home() {
     expired_at: 0,
   });
 
+
+	async function getDonate() {
+		const response = await axios.get(`http://8.218.247.153:8000/github.com/${inputValue1}`);
+		console.log(response);
+		if(response.status=== 200){
+			const list=response.data.data.donate
+			console.log(list);
+			// setcheck(list);
+
+			//const MyComponent: React.FC = (item,index) => {
+				//return (
+				  //<div>
+				//	{/* 使用.map 方法循环渲染列表项 */}
+				//	{item.map(item, index) => (
+				//	  <b key={index}>{check}</b>
+				//	))}
+				//  </div>
+				//);
+			 // }; 
+		}
+	}
+  
   async function add_service() {
     await signAndSubmitTransaction(do_add_service(), { gas_unit_price: 100 }).then(() => {
       // updated it
