@@ -169,7 +169,9 @@ const [hasAddrAggregator, setHasAddrAggregator] =
       ))}
 		  </div>
       <br />
-		  
+	  <div style={{ display: hash ? 'block' : 'none' }}>
+			<a href={`https://explorer.aptoslabs.com/txn/${hash}?network=devnet`} target="_blank">交易成功,在区块链浏览器查询</a>
+		  </div>
 		  
      </div>
     
