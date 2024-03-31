@@ -3,6 +3,7 @@ import base64
 import re
 from flask import Flask
 import os
+from flask_cors import CORS
 github_key = os.getenv("GITHUB_KEY")
 if github_key is None:
     raise Exception("请设置环墇变量 GITHUB_KEY")
@@ -51,7 +52,7 @@ def parse_donate(text):
     data = get_string_between(text, "# donate", "#")
     pattern = r'(0x[0-9a-fA-F]{64}) (\b\d+\.\d+?\b)'
     matches = re.findall(pattern, data)
-    return [{x[0]:x[1]} for x in list(set(matches))]
+    return [" ".join(x) for x in list(set(matches))]
 
 def parse_contributors(text):
     data = get_string_between(text, "# contributors", "#")
@@ -61,7 +62,7 @@ def parse_contributors(text):
 
 # 创建 Flask 应用
 app = Flask(__name__)
-
+CORS(app)
 # 定义路由
 @app.route('/github.com/<name>/<repo>')
 def github_readme_parse(name,repo):
