@@ -21,6 +21,13 @@
 - [ ] airdrop with flow payment
 
 ## QuickStart
+### contract 
+```
+aptos move compile
+
+aptos move publish
+
+```
 
 ### frontend
 ```
