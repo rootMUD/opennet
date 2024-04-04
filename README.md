@@ -4,6 +4,8 @@
 
 -- Let all open source contributors on the planet benefit from altruistic actions
 
+-- Based on [MoveDID Protocol](https://github.com/NonceGeek/MoveDID)
+
 **Important Links**
 
 * Smart Contract: `TODO`
