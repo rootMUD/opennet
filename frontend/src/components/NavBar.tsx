@@ -10,15 +10,16 @@ export function NavBar() {
     <nav className="navbar py-4 px-4 bg-base-100">
       <div className="flex-1">
         <a href="http://movedid.build" target="_blank">
-          <Image src="/logo2.png" width={150} height={150} alt="logo" />
+          <Image src="/logo.png" width={64} height={64} alt="logo" />
         </a>
         <ul className="menu menu-horizontal p-0 ml-5">
-        <NavItem href="/" title="User" />
-          <NavItem href="/repo" title="Repo" />
-          <NavItem href="/donate" title="Donate" />
-          <NavItem href="/chat_msg" title="Chat" />
-          <NavItem href="/repo_point" title="Point" />
-          <NavItem href="/airdrop" title="Airdrop" />
+          <NavItem href="/" title="Repo Viewer" />
+          <NavItem href="/donate" title="d0NaTe!" />
+          <li className="font-sans font-semibold text-lg">
+            <a href="https://manager.movedid.build/github_repo_binder" target="_blank" rel="noreferrer">Repo Binder</a>
+            <a href="https://github.com/rootmud/opennet" target="_blank" rel="noreferrer">Source Code</a>
+            <a href={MODULE_URL} target="_blank" rel="noreferrer">Contract on Explorer</a>
+          </li>
         </ul>
       </div>
       <AptosConnect />

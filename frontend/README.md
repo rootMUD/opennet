@@ -1,14 +1,18 @@
-# Examples of Aptos dApp Scaffold
+# Scaffold-Aptos
 
-A aptos application scaffold based on next.js Tailwind.
+ 🧪 An open-source, up-to-date toolkit for building decentralized applications (dapps) on the Aptos blockchain. It's designed to make it easier for developers to create and deploy smart contracts and build user interfaces that interact with those contracts. And...We are going to add AI Abilities for Aptos dApp Scaffold, to generate code automatically.
+
+See example that buidl based on Scaffold-Aptos(check the branches):
+
+> https://github.com/NonceGeek/scaffold-aptos-examples
 
 This project is referenced from:
 
 > https://github.com/Amovane/aptos-NFT-marketplace
 
-## Start Guide
+## Start Guide(//TODO)
 
-1. `git clone https://github.com/NonceGeek/scaffold-aptos.git`
+1. `git clone https://github.com/rootMUD/scaffold-aptos.git`
 2. `d scaffold-move/scaffold-aptos`
 3. `yarn # Install the necessary front-end packages, pay attention to your local network environment`
 4. Environment configuration, some global variables are in .env.local, which will be injected into the process started by yarn by default. Attention beginners, the testnet faucet url provided by aptos official website cannot be used directly.
