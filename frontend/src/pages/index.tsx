@@ -100,7 +100,7 @@ export default function Home() {
       //     "func_name": "analyze_readme",
       //     "params": [text]
       // }'
-        // await fetch('https://faas.movespace.xyz/api/v1/run?name=Contracts.Bodhi&func_name=get_asset_index', {
+        // await fetch('https://faas.movespace.xyz/api/v1/run?name=ReadmeAnalyzer&func_name=analyze_readme', {
         //   method: 'POST',
         //   headers: {
         //     'Content-Type': 'application/json',
